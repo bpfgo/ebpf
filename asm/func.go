@@ -6,7 +6,7 @@ package asm
 type BuiltinFunc int32
 
 func (_ BuiltinFunc) Max() BuiltinFunc {
-	return maxBuiltinFunc - 1
+	return MaxBuiltinFunc - 1
 }
 
 // eBPF built-in functions
@@ -202,13 +202,21 @@ const (
 	FnGetAttachCookie
 	FnTaskPtRegs
 
-	maxBuiltinFunc
+	MaxBuiltinFunc
 )
 
 // Call emits a function call.
 func (fn BuiltinFunc) Call() Instruction {
 	return Instruction{
 		OpCode:   OpCode(JumpClass).SetJumpOp(Call),
+		Constant: int64(fn),
+	}
+}
+
+// CallArgs emits a function call with extra argument.
+func (fn BuiltinFunc) CallArgs() Instruction {
+	return Instruction{
+		OpCode:   OpCode(JumpClass).SetJumpOp(CallArgs),
 		Constant: int64(fn),
 	}
 }

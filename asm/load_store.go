@@ -26,6 +26,8 @@ const (
 	MemMode Mode = 0x60
 	// XAddMode - add atomically across processors.
 	XAddMode Mode = 0xc0
+	// ProbeMem - probe memory
+	ProbeMem Mode = 0x20
 )
 
 // Size of load and store operations

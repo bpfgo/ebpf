@@ -44,6 +44,10 @@ const (
 	JSLT JumpOp = 0xc0
 	// JSLE jumps by offset if signed r <= signed imm
 	JSLE JumpOp = 0xd0
+	// Call builtin or user defined function from imm with argument
+	CallArgs JumpOp = 0xe0
+	// TailCall builtin function
+	TailCAll JumpOp = 0xf0
 )
 
 // Return emits an exit instruction.
@@ -58,6 +62,11 @@ func Return() Instruction {
 // Op returns the OpCode for a given jump source.
 func (op JumpOp) Op(source Source) OpCode {
 	return OpCode(JumpClass).SetJumpOp(op).SetSource(source)
+}
+
+// Op returns the OpCode for a given jump source.
+func (op JumpOp) Op32(source Source) OpCode {
+	return OpCode(Jump32Class).SetJumpOp(op).SetSource(source)
 }
 
 // Imm compares 64 bit dst to 64 bit value (sign extended), and adjusts PC by offset if the condition is fulfilled.
